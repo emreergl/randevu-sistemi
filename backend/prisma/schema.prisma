@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String?
+  role      String   @default("CUSTOMER")
+  createdAt DateTime @default(now())
+
+  appointments Appointment[]
+}
+
+model Service {
+  id       Int     @id @default(autoincrement())
+  name     String
+  price    Float
+  duration Int
+
+  appointments     Appointment[]
+  employeeServices EmployeeService[]
+}
+
+model Employee {
+  id    Int     @id @default(autoincrement())
+  name  String
+  phone String?
+
+  appointments     Appointment[]
+  workingHours     WorkingHour[]
+  employeeServices EmployeeService[]
+}
+
+model WorkingHour {
+  id         Int    @id @default(autoincrement())
+  employeeId Int
+  dayOfWeek  Int
+  startTime  String
+  endTime    String
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model EmployeeService {
+  id         Int @id @default(autoincrement())
+  employeeId Int
+  serviceId  Int
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  service  Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, serviceId])
+}
+
+model Appointment {
+  id         Int      @id @default(autoincrement())
+  customerId Int
+  serviceId  Int
+  employeeId Int
+  startTime  DateTime
+  endTime    DateTime
+  status     String   @default("PENDING")
+  createdAt  DateTime @default(now())
+
+  customer User     @relation(fields: [customerId], references: [id])
+  service  Service  @relation(fields: [serviceId], references: [id])
+  employee Employee @relation(fields: [employeeId], references: [id])
+}
