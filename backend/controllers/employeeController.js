@@ -1,4 +1,5 @@
 const prisma = require("../config/prisma");
+const { timeToMinutes, minutesToTime, getDayOfWeek, isOverlapping } = require("../utils/timeUtils");
 
 const getAllEmployees = async (req, res) => {
     try {
@@ -196,11 +197,108 @@ const setWorkingHours = async (req, res) => {
 
 };
 
+const getAvailability = async (req, res) => {
+    try {
+        const employeeId = Number(req.params.id);
+        const { date, serviceId } = req.query;
+
+        if (isNaN(employeeId)) {
+            return res.status(400).json({ message: "Geçersiz çalışan ID'si " });
+        }
+
+        if (!date || !serviceId) {
+            return res.status(400).json({ message: "date ve serviceId paramterleri zorunludur" });
+        }
+
+        const targetDate = new Date(date + "T00:00:00");
+        if (isNaN(targetDate.getTime())) {
+            return res.status(400).json({ message: "Geçersiz tarih formatı (YYYY-MM-DD bekleniyor"});
+        }
+
+        const service = await prisma.service.findUnique({
+            where: { id: Number(serviceId) }
+        });
+
+        if (!service) {
+            return res.status(400).json({ message: "Hizmet bulunamadı" });
+        }
+
+        const canProvide = await prisma.employeeService.findFirst ({
+            where: { employeeId, serviceId: Number(serviceId) }
+        });
+
+        if (!canProvide) {
+            return res.status(400).json({ message: "Buçalışan seçilen hizmeti vermemektedir" });
+        }
+
+        const dayOfWeek = getDayOfWeek(targetDate);
+
+        const workingHour = await prisma.workingHour.findFirst({
+            where: { employeeId, dayOfWeek }
+        });
+
+        if (!workingHour) {
+            return res.json({ date, slots: [] });
+        }
+
+        const dayStart = new Date(targetDate);
+        const dayEnd = new Date(targetDate);
+        dayEnd.setDate(dayEnd.getDate() + 1);
+
+        const appointments = await prisma.appointment.findMany({
+            where: {
+                employeeId,
+                status: { not: "CANCELED" },
+                startTime: { gte: dayStart, lt: dayEnd }
+            }
+        });
+
+        const busySlots = appointments.map((apt) => ({
+            start: apt.startTime.getHours() * 60 + apt.startTime.getMinutes(),
+            end: apt.endTime.getHours() * 60 + apt.endTime.getMinutes()
+        }));
+
+        const workStart = timeToMinutes(workingHour.startTime);
+        const workEnd = timeToMinutes(workingHour.endTime);
+
+        const slotStep = 15;
+        const duration = service.duration;
+
+        const availableSlots = [];
+
+        for (let start = workStart; start + duration <= workEnd; start += slotStep) {
+            const end = start + duration;
+
+            const hasConflict = busySlots.some((busy) =>
+                isOverlapping(start, end, busy.start, busy.end)
+        );
+
+        if (!hasConflict) {
+            availableSlots.push({
+                sartTime: minutesToTime(start),
+                endTime: minutesToTime(end)
+            });
+        }
+    }
+    res.json({
+        date,employeeId,
+        serviceId: Number(serviceId),
+        duration,
+        slots: availableSlots
+    });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Sunucu hatası" });
+    }
+};
+
 module.exports = {
     getAllEmployees,
     getEmployeeById,
     createEmployee,
     updateEmployee,
     deleteEmployee,
-    setWorkingHours
+    setWorkingHours,
+    getAvailability
 };
