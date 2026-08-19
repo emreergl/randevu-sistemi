@@ -106,4 +106,48 @@ const createAppointment = async (req, res) => {
     }
 };
 
-module.exports = { createAppointment };
+const getAppointments = async (req, res) => {
+    try {
+        const where = {};
+
+        if (req.user.role !== "ADMIN") {
+            where.customerId = req.user.userId;
+        }
+
+        const { status, employeeId, date } = req.query;
+
+        if (status) {
+            where.status = status;
+        }
+
+        if (employeeId) {
+            where.employeeId = Number(employeeId);
+        }
+
+        if(date) {
+            const dayStart = new Date(date + "T00:00:00");
+            const dayEnd = new Date(dayStart);
+            dayEnd.setDate(dayEnd.getDate() + 1);
+            where.startTime = { gte: dayStart, lt: dayEnd };
+        }
+
+        const appointments = await prisma.appointment.findMany({
+            where,
+            include: {
+                service: true,
+                employee: true,
+                customer: {
+                    select: { id: true, name: true, email: true, phone: true }
+                }
+            },
+            orderBy: { startTime: "asc" }
+        });
+
+        res.json(appointments);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Sunucu hatası" });
+        }        
+};
+
+module.exports = { createAppointment, getAppointments };
