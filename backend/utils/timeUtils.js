@@ -14,8 +14,8 @@ const getDayOfWeek = (date) => {
     return day === 0 ? 7 : day;
 };
 
-const isOverIapping = (start1, end1, start2, end2) => {
+const isOverlapping = (start1, end1, start2, end2) => {
     return start1 < end2 && start2 <end1; 
 };
 
-module.exports = { timeToMinutes, minutesToTime, getDayOfWeek, isOverIapping };
+module.exports = { timeToMinutes, minutesToTime, getDayOfWeek, isOverlapping };
