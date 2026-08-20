@@ -79,34 +79,33 @@ const createEmployee = async (req, res) => {
 };
 
 const updateEmployee = async (req, res) => {
-    try {
-        const id = Number(req.params.id);
-        const { name, email, service } =req.body;
+  try {
+    const id = Number(req.params.id);
+    const { name, phone } = req.body;
 
-        if (isNaN(id)) {
-            return res.status(400).json({ message: "Geçersiz çalışan ID'si"  });
+    if (isNaN(id)) {
+      return res.status(400).json({ message: "Geçersiz çalışan ID'si" });
     }
 
     const existing = await prisma.employee.findUnique({ where: { id } });
 
     if (!existing) {
-        return res.status(404).json({ message: "Çalışan bulunamadı" });
+      return res.status(404).json({ message: "Çalışan bulunamadı" });
     }
 
     const employee = await prisma.employee.update({
-        where: { id },
-        data: {
-            name: name ?? existing.name,
-            email: email ?? existing.email,
-            service: service ?? existing.service
-        }
+      where: { id },
+      data: {
+        name: name ?? existing.name,
+        phone: phone ?? existing.phone
+      }
     });
 
     res.json(employee);
-    } catch(error) {
-        console.error(error);
-        res.status(500).json({ message: "Sunucu hatası" });
-    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
 };
 
 const deleteEmployee = async (req, res) => {
@@ -197,6 +196,26 @@ const setWorkingHours = async (req, res) => {
 
 };
 
+const getWorkingHours = async (req, res) => {
+  try {
+    const employeeId = Number(req.params.id);
+
+    if (isNaN(employeeId)) {
+      return res.status(400).json({ message: "Geçersiz çalışan ID'si" });
+    }
+
+    const workingHours = await prisma.workingHour.findMany({
+      where: { employeeId },
+      orderBy: { dayOfWeek: "asc" }
+    });
+
+    res.json(workingHours);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
 const getAvailability = async (req, res) => {
     try {
         const employeeId = Number(req.params.id);
@@ -275,7 +294,7 @@ const getAvailability = async (req, res) => {
 
         if (!hasConflict) {
             availableSlots.push({
-                sartTime: minutesToTime(start),
+                startTime: minutesToTime(start),
                 endTime: minutesToTime(end)
             });
         }
@@ -299,6 +318,7 @@ module.exports = {
     createEmployee,
     updateEmployee,
     deleteEmployee,
+    getWorkingHours,
     setWorkingHours,
     getAvailability
 };

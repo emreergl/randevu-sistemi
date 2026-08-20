@@ -150,4 +150,126 @@ const getAppointments = async (req, res) => {
         }        
 };
 
-module.exports = { createAppointment, getAppointments };
+const getAppointmentById = async (req, res) => {
+    try {
+        const id = Number(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Geçersiz radenvu ID'si" });
+        }
+
+        const appointment = await prisma.appointment.findUnique({
+            where: { id },
+            include: {
+                service: true,
+                employee: true,
+                customer: {
+                    select: { id: true, name: true, email: true, phone: true }
+                }
+            }
+        });
+
+        if (!appointment) {
+            return res.status(404).json({ message: "Randevu bulunamadı" });
+        }
+
+        if (req.user.role !== "ADMIN" && appointment.customerId !== req.user.userId) {
+            return res.status(403).json({ message: "Bu randevuya erişim yetkiniz yok" });
+        }
+
+        res.json(appointment);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Sunucu hatası" });
+    }
+};
+
+const updateAppointmentStatus = async (req,res) => {
+    try {
+        const id = Number(req.params.id);
+        const { status } = req.body;
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Geçersiz randevu ID'si" });
+        }
+
+        const validStatuses = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
+
+        if (!status || !validStatuses.includes(status)) {
+            return res.status(400).json({ message: 'status şu değerlerden biri olmalıdır: ${validStatuses.join(", ")}'
+            });
+        }
+
+        const existing = await prisma.appointment.findUnique({ where: { id} });
+
+        if (!existing) {
+            return res.status(404).json({ message: "Randevu bulunamadı" });
+        }
+
+        const appointment = await prisma.appointment.update({
+            where: { id },
+            data: { status },
+            include: {
+                service: true,
+                employee: true,
+                customer: {
+                    select: { id: true, name: true, email: true }
+                }
+            }
+        });
+
+        res.json(appointment);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Sunucu hatası" });
+    }
+};
+
+const cancelAppointment = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      return res.status(400).json({ message: "Geçersiz randevu ID'si" });
+    }
+
+    const existing = await prisma.appointment.findUnique({ where: { id } });
+
+    if (!existing) {
+      return res.status(404).json({ message: "Randevu bulunamadı" });
+    }
+
+    if (req.user.role !== "ADMIN" && existing.customerId !== req.user.userId) {
+      return res.status(403).json({ message: "Bu randevuyu iptal etme yetkiniz yok" });
+    }
+
+    if (existing.status === "CANCELLED") {
+      return res.status(400).json({ message: "Randevu zaten iptal edilmiş" });
+    }
+
+    if (existing.status === "COMPLETED") {
+      return res.status(400).json({ message: "Tamamlanmış randevu iptal edilemez" });
+    }
+
+    const hoursUntilAppointment = (existing.startTime - new Date()) / (1000 * 60 * 60);
+
+    if (req.user.role !== "ADMIN" && hoursUntilAppointment < 24) {
+      return res.status(400).json({
+        message: "Randevuya 24 saatten az kaldığı için iptal edilemez"
+      });
+    }
+
+    const appointment = await prisma.appointment.update({
+      where: { id },
+      data: { status: "CANCELLED" }
+    });
+
+    res.json({ message: "Randevu iptal edildi", appointment });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+module.exports = { createAppointment, getAppointments, getAppointmentById, updateAppointmentStatus, cancelAppointment };
