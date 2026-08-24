@@ -1,5 +1,6 @@
 const prisma = require("../config/prisma");
 const { timeToMinutes, getDayOfWeek, isOverlapping } = require("../utils/timeUtils");
+const { sendAppointmentCreated, sendAppointmentConfirmed, sendAppointmentCancelled } = require("../utils/emailService");
 
 const createAppointment = async (req, res) => {
     try {
@@ -95,9 +96,14 @@ const createAppointment = async (req, res) => {
         },
         include: {
             service: true,
-            employee: true
+            employee: true,
+            customer: {
+                select: { id: true, name: true, email: true }
+            }
         }
     });
+
+    sendAppointmentCreated(appointment);
 
     res.status(201).json(appointment);
     } catch (error) {
@@ -218,6 +224,12 @@ const updateAppointmentStatus = async (req,res) => {
             }
         });
 
+        if (status === "CONFIRMED") {
+            sendAppointmentConfirmed(appointment);
+        } else if (status === "CANCELLED") {
+            sendAppointmentCancelled(appointment);        
+        }
+
         res.json(appointment);
     } catch (error) {
         console.error(error);
@@ -261,8 +273,17 @@ const cancelAppointment = async (req, res) => {
 
     const appointment = await prisma.appointment.update({
       where: { id },
-      data: { status: "CANCELLED" }
+      data: { status: "CANCELLED" },
+      include: {
+        service: true,
+        employee: true,
+        customer: {
+            select: { id: true, name: true, email: true}
+        }
+      }
     });
+
+    sendAppointmentCancelled(appointment);
 
     res.json({ message: "Randevu iptal edildi", appointment });
 
