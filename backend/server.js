@@ -7,12 +7,14 @@ const PORT = process.env.PORT || 5000;
 const serviceRoutes = require("./routes/serviceRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 app.use(express.json());
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/employees", employeeRoutes);
+app.use("/api/reports", reportRoutes);
 
 
 app.get("/", (req, res) => {
