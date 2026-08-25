@@ -1,4 +1,4 @@
-
+process.env.TZ = "Europe/Istanbul";
 require("dotenv").config();
 const express = require("express");
 const authRoutes = require("./routes/authRoutes");

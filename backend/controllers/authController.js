@@ -112,5 +112,71 @@ const getMe = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Sunucu hatası"});
     }
-    };
-module.exports = { register, login, getMe };
+};
+
+const updateMe = async (req, res) => {
+    try {
+        const { name, phone } = req.body;
+
+        if (!name && !phone) {
+            return res.status(400).json({ message: "Güncellenecek en az bir alan gönderilmelidir" });
+        }
+
+        const user = await prisma.user.update({
+            where: { id: req.user.userId },
+            data: {
+                ...(name && {name}),
+                ...(phone && {phone})
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                phone: true,
+                role: true
+            }
+        });
+
+        res.json(user);
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ message: "Sunucu hatası" });
+        }
+};
+
+const changePassword = async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ message: "Mecvut ve yeni şifre zorunludur" });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({ message: "Yeni şifre en az 6 karakter olmalıdır" });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { id: req.user.userId }
+        });
+
+        const isValid = await bcrypt.compare(currentPassword, user.password);
+
+        if (!isValid) {
+            return res.status(401).json({ message: "Mevcut şifre hatalı" });
+        }
+
+        const hashed = await bcrypt.hash(newPassword, 10);
+
+        await prisma.user.update({
+            where: { id: req.user.userId },
+            data: { password: hashed } 
+        });
+
+        res.json({ message: "Şifreniz güncellendi" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Sunucu hatası" });
+    }
+};
+module.exports = { register, login, getMe, updateMe, changePassword };
