@@ -116,7 +116,7 @@ Listeleme sorgusu `?status=&employeeId=&date=` parametreleriyle filtrelenebilir.
 Depoyu klonlayın:
 
 ```
-git clone https://github.com/KULLANICI-ADIN/randevu-sistemi.git
+git clone https://github.com/emreergl/randevu-sistemi.git
 cd randevu-sistemi/backend
 ```
 
