@@ -1,0 +1,15 @@
+import api from "./api";
+
+export const createAppointment = async (data) => {
+    const response = await api.post("/appointments", data);
+    return response.data;
+};
+
+export const getAppointments = async (filters = {}) => {
+    const response = await api.get("/appointments", { params: filters });
+};
+
+export const cancelAppointment = async (id) => {
+    const response = await api.delete(`/appointments/${id}`);
+    return response.data;
+};

@@ -2,13 +2,18 @@ process.env.TZ = "Europe/Istanbul";
 require("dotenv").config();
 const express = require("express");
 const authRoutes = require("./routes/authRoutes");
-const app = express();
 const PORT = process.env.PORT || 5000;
 const serviceRoutes = require("./routes/serviceRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const reportRoutes = require("./routes/reportRoutes");
+const cors = require("cors");
+const app = express();
 
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 app.use(express.json());
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/auth", authRoutes);
