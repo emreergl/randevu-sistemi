@@ -26,7 +26,7 @@ function Navbar() {
                         )}
                         
                         <Link to="/appointments" className="text-ink-soft hover:text-ink">
-                            Randevuları
+                            Randevularım
                         </Link>
 
                         <span className="text-ink-soft">

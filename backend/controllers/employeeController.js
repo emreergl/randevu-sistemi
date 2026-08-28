@@ -4,7 +4,12 @@ const { timeToMinutes, minutesToTime, getDayOfWeek, isOverlapping } = require(".
 const getAllEmployees = async (req, res) => {
     try {
         const employees = await prisma.employee.findMany({
-            orderBy: { name: "asc" }
+            orderBy: { name: "asc" },
+            include: {
+                employeeServices: {
+                    include: { service: true }
+                }
+            }
         });
         res.json(employees);
     } catch (error) {
