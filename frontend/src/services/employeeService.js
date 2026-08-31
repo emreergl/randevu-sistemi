@@ -5,7 +5,7 @@ export const getEmployees = async () => {
     return response.data;
 };
 
-export const getAvailability = async (employeeId, Date, serviceId) => {
+export const getAvailability = async (employeeId, date, serviceId) => {
     const response = await api.get(`/employees/${employeeId}/availability`, {
         params: { date, serviceId }
     });

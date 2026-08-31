@@ -9,7 +9,7 @@ function Register() {
     const { register, isAuthenticated, isAdmin } = useAuth();
 
     useEffect(() => {
-        if (Authenticated) {
+        if (isAuthenticated) {
             navigate(isAdmin ? "/admin" : "/");
         }
     }, [isAuthenticated, isAdmin, navigate]);

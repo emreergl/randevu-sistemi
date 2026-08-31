@@ -6,9 +6,8 @@ const getAllEmployees = async (req, res) => {
         const employees = await prisma.employee.findMany({
             orderBy: { name: "asc" },
             include: {
-                employeeServices: {
-                    include: { service: true }
-                }
+                employeeServices: true,
+                workingHours: true
             }
         });
         res.json(employees);
