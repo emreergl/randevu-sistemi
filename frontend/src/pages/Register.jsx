@@ -1,12 +1,18 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { useState, useEffect } from "react";
 
 function Register() {
     const navigate = useNavigate();
-    const { register } = useAuth();
+    const { register, isAuthenticated, isAdmin } = useAuth();
+
+    useEffect(() => {
+        if (Authenticated) {
+            navigate(isAdmin ? "/admin" : "/");
+        }
+    }, [isAuthenticated, isAdmin, navigate]);
 
     const [form, setForm] = useState({ name: "", email: "", password: "", phone: "" });
     const [error, setError] = useState("");

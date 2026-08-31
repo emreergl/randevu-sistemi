@@ -11,6 +11,7 @@ function Booking() {
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
         if (!service) {
@@ -34,6 +35,43 @@ function Booking() {
 
         fetchEmployees();
     }, [service, navigate]);
+
+    const handleSelectEmployee = (emp) => {
+        setSelectedEmployee(emp);
+        setSelectedDate(null);
+    };
+
+    const getNextDays = () => {
+        const days = [];
+        const today = new Date();
+
+        for (let i = 0; i < 14; i++) {
+            const date = new Date(today);
+            date.setDate(date.getDate() + i);
+            days.push(date);
+        }
+
+        return days;
+    };
+
+    const formatDayLabel = (date) => {
+        const dayNames = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
+        return dayNames[date.getDay()];
+    };
+
+    const toDateKey = (date) => {
+        return date.toISOString().split("T")[0];
+    };
+
+    const handleContinue = () => {
+        navigate("/booking/time", {
+            state: {
+                service,
+                employee: selectedEmployee,
+                date: toDateKey(selectedDate)
+            }
+        });
+    };
 
     if (!service) return null;
 
@@ -73,15 +111,39 @@ function Booking() {
             )}
 
             {selectedEmployee && (
-                <div className="mt-8 flex justify-end">
-                    <button
-                        onClick={() => navigate("/booking/schedule", { state: { service, employee: selectedEmployee } })}
-                        className="bg-brand text-white px-6 py-2.5 rounded-lg font-medium hover:bg-brand-dark transition-colors"    
-                    >
-                        Devam    
-                    </button>
-                </div>    
+                <>
+                    <h2 className="text-sm text-ink-soft mb-3">Tarih seçiniz</h2>
+                    
+                    <div className="flex gap-2 overflow-x-auto pb-2 mb-8">
+                        {getNextDays().map((date) => {
+                            const isSelected = selectedDate && toDateKey(selectedDate) === toDateKey(date);
+
+                            return (
+                                <button
+                                    key={toDateKey(date)}
+                                    onClick={() => setSelectedDate(date)}
+                                    className={`flex-shrink-0 w-16 py-3 rounded-xl border text-center transition-color
+                                        ${isSelected
+                                            ? "bg-brand border-brand text-white"
+                                            : "border-line hover:border-brand text-ink"}`}
+                                >
+                                    <div className="text-xs opacity-80">{formatDayLabel(date)}</div>
+                                    <div className="font-medium">{date.getDate()}</div>
+                                </button>            
+                            );
+                        })}
+                    </div>
+                    </>
             )}
+
+            {selectedDate && (
+                <button
+                    onClick={handleContinue}
+                    className="w-full bg-brand text-white py-3 rounded-lg font-medium hover:bg-brand-dark transition-colors"
+                >
+                    Devam et
+                </button>
+            )}    
         </div>
     );
 }

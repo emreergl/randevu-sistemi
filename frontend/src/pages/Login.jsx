@@ -1,12 +1,18 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { useState, useEffect } from "react";
 
 function Login() {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, isAuthenticated, isAdmin } = useAuth();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate(isAdmin ? "/admin" : "/");
+        }
+    }, [isAuthenticated, isAdmin, navigate]);
 
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
@@ -42,7 +48,7 @@ function Login() {
             <div className="w-full max-w-sm">
 
                 <div className="text-center mb-8">
-                    <h1 className="font-display text-3xl text-brand mb-1">BAYAN KUAFKÖR ÇETİN </h1>
+                    <h1 className="font-display text-3xl text-brand mb-1">BAYAN KUAFÖRÜ ÇETİN </h1>
                     <p className="text-ink-soft text-sm">Randevu sistemine hoşgeldiniz</p>
                 </div>
 
