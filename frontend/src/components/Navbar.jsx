@@ -29,9 +29,9 @@ function Navbar() {
                             Randevularım
                         </Link>
 
-                        <span className="text-ink-soft">
+                        <Link to="/profile" className="text-ink-soft hover:text-ink">
                             {user.name}
-                        </span>
+                        </Link>
 
                         <button
                             onClick={handleLogout}

@@ -51,6 +51,7 @@ export function AuthProvider({ children }) {
         login,
         register,
         logout,
+        updateUser,
         isAuthenticated: !!user,
         isAdmin: user?.role === "ADMIN"
     };
@@ -65,5 +66,9 @@ export function useAuth() {
         throw new Error("useAuth, AuthProvider içinde kullanılmalıdır");
     }
 
+const updateUser = (updatedUser) => {
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+};
     return context;
 }

@@ -9,6 +9,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Booking from "./pages/Booking";
 import BookingTime from "./pages/BookingTime";
 import BookingSuccess from "./pages/BookingSuccess";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
       <Route path="/appointments" element={<MyAppointments />} />
       <Route path="/booking" element={<Booking />} />
       <Route path="/booking/time" element={<BookingTime />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/booking/success" element={<BookingSuccess />} />
+      <Route path ="/profile" element={<Profile />} />
       </Routes>
       </BrowserRouter>
     </AuthProvider>

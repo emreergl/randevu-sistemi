@@ -7,6 +7,7 @@ export const createAppointment = async (data) => {
 
 export const getAppointments = async (filters = {}) => {
     const response = await api.get("/appointments", { params: filters });
+    return response.data;
 };
 
 export const cancelAppointment = async (id) => {
