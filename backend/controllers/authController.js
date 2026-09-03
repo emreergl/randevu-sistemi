@@ -125,8 +125,8 @@ const updateMe = async (req, res) => {
         const user = await prisma.user.update({
             where: { id: req.user.userId },
             data: {
-                ...(name && {name}),
-                ...(phone && {phone})
+                ...(name !== undefined && { name }),
+                ...(phone !== undefined && { phone })
             },
             select: {
                 id: true,
@@ -163,7 +163,7 @@ const changePassword = async (req, res) => {
         const isValid = await bcrypt.compare(currentPassword, user.password);
 
         if (!isValid) {
-            return res.status(401).json({ message: "Mevcut şifre hatalı" });
+            return res.status(400).json({ message: "Mevcut şifre hatalı" });
         }
 
         const hashed = await bcrypt.hash(newPassword, 10);

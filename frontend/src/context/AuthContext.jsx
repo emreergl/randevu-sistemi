@@ -45,6 +45,11 @@ export function AuthProvider({ children }) {
         setUser(null);
     };
 
+    const updateUser = (updatedUser) => {
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+};
+
     const value = {
         user,
         loading,
@@ -65,10 +70,5 @@ export function useAuth() {
     if (!context) {
         throw new Error("useAuth, AuthProvider içinde kullanılmalıdır");
     }
-
-const updateUser = (updatedUser) => {
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    setUser(updatedUser);
-};
     return context;
 }

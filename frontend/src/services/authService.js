@@ -12,6 +12,7 @@ export const register = async (data) => {
 
 export const getMe = async () => {
     const response = await api.get("/auth/me");
+    return response.data;
 };
 
 export const updateProfile = async (data) => {
@@ -19,7 +20,7 @@ export const updateProfile = async (data) => {
     return response.data;
 };
 
-export const changePassword = async (currenPassword, newPassword) => {
+export const changePassword = async (currentPassword, newPassword) => {
     const response = await api.put("/auth/me/password", {
         currentPassword,
         newPassword

@@ -7,7 +7,7 @@ function Button({ children, variant = "primary", loading, ...props }) {
     };
 
     return (
-        <button{...props}
+        <button {...props}
         disabled={loading || props.disabled}
         className={`${base} ${variants[variant]}`}
     >
