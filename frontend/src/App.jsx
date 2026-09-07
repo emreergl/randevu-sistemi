@@ -12,6 +12,7 @@ import BookingSuccess from "./pages/BookingSuccess";
 import Profile from "./pages/Profile";
 import AdminServices from "./pages/AdminServices";
 import AdminEmployees from "./pages/AdminEmployees";
+import AdminAppointments from "./pages/AdminAppointments";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <Route path="/booking/success" element={<BookingSuccess />} />
       <Route path="/admin/services" element={<AdminServices />} />
       <Route path="/admin/employees" element={<AdminEmployees />} />
+      <Route path="/admin/appointments" element={<AdminAppointments />} />
 
       </Routes>
       </BrowserRouter>

@@ -14,3 +14,8 @@ export const cancelAppointment = async (id) => {
     const response = await api.delete(`/appointments/${id}`);
     return response.data;
 };
+
+export const updateAppointmentStatus = async (id, status) => {
+    const response = await api.patch(`/appointments/${id}/status`, { status });
+    return response.data;
+};
