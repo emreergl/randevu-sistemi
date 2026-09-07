@@ -11,6 +11,7 @@ import BookingTime from "./pages/BookingTime";
 import BookingSuccess from "./pages/BookingSuccess";
 import Profile from "./pages/Profile";
 import AdminServices from "./pages/AdminServices";
+import AdminEmployees from "./pages/AdminEmployees";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/booking/success" element={<BookingSuccess />} />
       <Route path="/admin/services" element={<AdminServices />} />
+      <Route path="/admin/employees" element={<AdminEmployees />} />
 
       </Routes>
       </BrowserRouter>

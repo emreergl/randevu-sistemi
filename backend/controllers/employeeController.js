@@ -85,7 +85,7 @@ const createEmployee = async (req, res) => {
 const updateEmployee = async (req, res) => {
   try {
     const id = Number(req.params.id);
-    const { name, phone } = req.body;
+    const { name, phone, serviceIds } = req.body;
 
     if (isNaN(id)) {
       return res.status(400).json({ message: "Geçersiz çalışan ID'si" });
@@ -97,11 +97,31 @@ const updateEmployee = async (req, res) => {
       return res.status(404).json({ message: "Çalışan bulunamadı" });
     }
 
+    if (serviceIds) {
+        const services = await prisma.service.findMany({
+            where: { id: { in: serviceIds } }
+        });
+
+        if (services.length !== serviceIds.length) {
+            return res.status(400).json({ message: "Bir veya daha fazla hizmet bulunamadı" });
+        }
+
+        await prisma.$transaction([
+            prisma.employeeService.deleteMany({ where: { employeeId: id } }),
+            prisma.employeeService.createMany({
+                data: serviceIds.map((serviceId) => ({ employeeId: id, serviceId }))
+            })
+        ]);
+    }
+
     const employee = await prisma.employee.update({
       where: { id },
       data: {
         name: name ?? existing.name,
         phone: phone ?? existing.phone
+      },
+      include: {
+        employeeServices: true
       }
     });
 
