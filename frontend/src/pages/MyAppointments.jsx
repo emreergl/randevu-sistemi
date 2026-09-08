@@ -6,7 +6,8 @@ const statusConfig = {
   PENDING: { label: "Beklemede", bg: "bg-warn-soft", text: "text-warn" },
   CONFIRMED: { label: "Onaylandı", bg: "bg-brand-soft", text: "text-brand" },
   CANCELLED: { label: "İptal Edildi", bg: "bg-paper", text: "text-ink-faint" },
-  COMPLETED: { label: "Tamamlandı", bg: "bg-ok-bg", text: "text-ok-tx" }
+  COMPLETED: { label: "Tamamlandı", bg: "bg-ok-bg", text: "text-ok-tx" },
+  NO_SHOW: { label: "Gelmedi", bg: "bg-danger-soft", text: "text-danger" }
 };
 
 function MyAppointments() {
@@ -86,7 +87,14 @@ function MyAppointments() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-10">
 
-      <h1 className="font-display text-2xl text-ink mb-6">Randevularım</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="font-display text-2xl text-ink">Randevularım</h1>
+        <Link
+          to="/" className="bg-brand text-white tezt-sm px-4 py-2 rounded-lg hover:bg-brand-dark"
+        >
+          + Yeni Randevu Al
+        </Link>
+      </div>
 
       <div className="flex gap-1 mb-6 border-b border-line">
         <button

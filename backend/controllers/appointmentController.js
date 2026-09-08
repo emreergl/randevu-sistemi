@@ -146,7 +146,7 @@ const getAppointments = async (req, res) => {
                     select: { id: true, name: true, email: true, phone: true }
                 }
             },
-            orderBy: { startTime: "asc" }
+            orderBy: { startTime: "desc" }
         });
 
         res.json(appointments);
@@ -199,7 +199,7 @@ const updateAppointmentStatus = async (req,res) => {
             return res.status(400).json({ message: "Geçersiz randevu ID'si" });
         }
 
-        const validStatuses = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
+        const validStatuses = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED", "NO_SHOW"];
 
         if (!status || !validStatuses.includes(status)) {
             return res.status(400).json({ message: 'status şu değerlerden biri olmalıdır: ${validStatuses.join(", ")}'

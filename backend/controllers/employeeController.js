@@ -146,6 +146,14 @@ const deleteEmployee = async (req, res) => {
             return res.status(404).json({ message: "Çalışan bulunamadı" });
         }
 
+        const appointmentCount = await prisma.appointment.count({
+            where: { employeeId: id }
+        });
+
+        if (appointmentCount > 0) {
+            return res.status(400).json({ message: "Bu çalışanın randevu kaydı bulunduğu için silinemez" });
+        }
+
         await prisma.employee.delete({ where: { id } });
 
         res.json({ message: "Çalışan silindi" });

@@ -25,9 +25,11 @@ function Navbar() {
                             </Link>
                         )}
                         
+                        {!isAdmin && (
                         <Link to="/appointments" className="text-ink-soft hover:text-ink">
                             Randevularım
                         </Link>
+                        )}
 
                         <Link to="/profile" className="text-ink-soft hover:text-ink">
                             {user.name}

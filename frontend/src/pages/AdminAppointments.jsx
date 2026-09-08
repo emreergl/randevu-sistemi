@@ -6,20 +6,22 @@ import {
 import { getEmployees } from "../services/employeeService";
 import BackButton from "../components/BackButton";
 
-const statusOptions = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
+const statusOptions = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED", "NO_SHOW"];
 
 const statusLabels = {
     PENDING: "Beklemede",
     CONFIRMED: "Onaylandı",
     COMPLETED: "Tamamlandı",
-    CANCELLED: "İptal Edildi"
+    CANCELLED: "İptal Edildi",
+    NO_SHOW: "Gelmedi"
 };
 
 const statusColors = {
     PENDING: "bg-warn-soft text-warn",
     CONFIRMED: "bg-brand-soft text-brand",
     COMPLETED: "bg-ok-bg text-ok-tx",
-    CANCELLED: "bg-paper text-ink-faint"
+    CANCELLED: "bg-paper text-ink-faint",
+    NO_SHOW: "bg-danger-soft text-danger"
 };
 
 function AdminAppointments() {
