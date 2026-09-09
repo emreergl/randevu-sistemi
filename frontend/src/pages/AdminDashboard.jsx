@@ -83,21 +83,18 @@ function AdminDashboard() {
     return(
         <div className="max-w-5xl mx-auto px-6 py-10">
             
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
                 <h1 className="font-display text-2xl text-ink">Yönetim Paneli</h1>
-                <div className="flex gap-3">
-                    <Link to="/admin/services" className="text-sm text-brand hover:underline"
-                    >
+                <div className="flex flex-wrap gap-3">
+                    <Link to="/admin/services" className="text-sm text-brand hover:underline">
                         Hizmetler
                     </Link>
-                    <Link to="/admin/employees" className="text-sm text-brand hover:underline"
-                    >
+                    <Link to="/admin/employees" className="text-sm text-brand hover:underline">
                         Çalışanlar
                     </Link>
-                    <Link to="/admin/appointments" className="text-sm text-brand hover:underline"
-                    >
+                    <Link to="/admin/appointments" className="text-sm text-brand hover:underline">
                         Randevular
-                    </Link>  
+                    </Link>
                 </div>
             </div>
 

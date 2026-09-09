@@ -102,7 +102,8 @@ function Booking() {
                 <>
                     <h2 className="text-sm text-ink-soft mb-3">Tarih seçin</h2>
 
-                    <div className="flex gap-2 overflow-x-auto pb-2 mb-8">
+                    <div
+                        className="flex gap-2 overflow-x-auto pb-2 mb-8">
                         {getNextDays().map((date) => {
                             const isSelected = selectedDate && toDateKey(selectedDate) === toDateKey(date);
 

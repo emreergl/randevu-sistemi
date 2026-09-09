@@ -168,8 +168,8 @@ function AdminAppointments() {
                     Filtrelere uygun randevu bulunamadı.
                 </div>
             ) : (
-                <div className="bg-surface border border-line rounded-xl overflow-hidden">
-                    <table className="w-full text-sm">
+                <div className="bg-surface border border-line rounded-xl overflow-x-auto">
+                    <table className="w-full text-sm min-w-[600px]">
                         <thead>
                             <tr className="border-b border-line text-left text-ink-soft">
                                 <th className="px-4 py-3 font-medium">Tarih/Saat</th>
