@@ -2,6 +2,16 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getServices } from "../services/serviceService";
 
+const serviceImages = {
+  "Saç Kesimi": "https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGFpcmN1dCUyMHdvbWVufGVufDB8fDB8fHww",
+  "Fön": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&q=80&fit=crop",
+  "Saç Boyama": "https://thumbs.dreamstime.com/b/hairdresser-applying-color-female-customer-salon-doing-hair-dye-professional-to-design-women-having-her-dyed-36422960.jpg",
+  "Röfle": "https://images.unsplash.com/photo-1707979577466-2d6109c68a45?w=400&q=80&fit=crop",
+  "Keratin Bakımı": "https://images.unsplash.com/photo-1605980625600-88b46abafa8d?w=400&q=80&fit=crop"
+};
+
+const defaultImage = "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80&fit=crop";
+
 function Home() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +20,7 @@ function Home() {
     const fetchServices = async () => {
       try {
         const data = await getServices();
-        setServices(data.slice(0, 3));
+        setServices(data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -45,16 +55,13 @@ function Home() {
             </p>
           </div>
 
-          <div className="relative h-72 lg:h-96 rounded-2xl overflow-hidden bg-brand-soft/10">
-            <div
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: "radial-gradient(circle at 30% 40%, #ffffff 1.5px, transparent 1.5px)",
-                backgroundSize: "28px 28px"
-              }}
-            ></div>
+          <div className="relative h-72 lg:h-96 rounded-2xl overflow-hidden">
+            <img
+              src="https://st2.depositphotos.com/2885805/7084/v/450/depositphotos_70841815-stock-illustration-beauty-salon-concept.jpg"
+              alt="Salon"
+              className="w-full h-full object-cover"
+            />
           </div>
-
         </div>
       </div>
 
@@ -65,37 +72,38 @@ function Home() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-surface border border-line rounded-xl p-5 h-40 animate-pulse"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-surface border border-line rounded-xl overflow-hidden animate-pulse">
+                <div className="h-40 bg-line"></div>
+                <div className="p-5">
+                  <div className="h-4 bg-line rounded w-2/3"></div>
+                </div>
+              </div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {services.map((service) => (
               <div
                 key={service.id}
                 className="bg-surface border border-line rounded-xl overflow-hidden"
               >
-                <div className="h-40 bg-brand-dark flex items-center justify-center">
-                  <span className="text-white text-3xl">✂</span>
+                <div className="h-40 overflow-hidden">
+                  <img
+                    src={serviceImages[service.name] || defaultImage}
+                    alt={service.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-medium text-ink">{service.name}</h3>
+                  <h3 className="font-medium text-lg text-ink mb-1">{service.name}</h3>
+                  <p className="text-ink-soft text-sm">{service.duration} dakika</p>
                 </div>
               </div>
             ))}
           </div>
         )}
-
-        <div className="text-center">
-          <Link
-            to="/services"
-            className="inline-block bg-brand text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-dark transition-colors"
-          >
-            Tüm Hizmetleri Gör
-          </Link>
-        </div>
       </div>
     </>
   );

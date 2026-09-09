@@ -2,6 +2,16 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getServices } from "../services/serviceService";
 
+const serviceImages = {
+  "Saç Kesimi": "https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?w=500&auto=format&fit=crop&q=60",
+  "Fön": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&q=80&fit=crop",
+  "Saç Boyama": "https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?w=400&q=80&fit=crop",
+  "Röfle": "https://images.unsplash.com/photo-1707979577466-2d6109c68a45?w=400&q=80&fit=crop",
+  "Keratin Bakımı": "https://images.unsplash.com/photo-1605980625600-88b46abafa8d?w=400&q=80&fit=crop"
+};
+
+const defaultImage = "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80&fit=crop";
+
 function Services() {
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
@@ -67,8 +77,12 @@ function Services() {
                 className="text-left bg-surface border border-line rounded-xl overflow-hidden
                   hover:border-brand hover:shadow-md transition-all"
               >
-                <div className="h-40 bg-brand-dark flex items-center justify-center">
-                  <span className="text-white text-3xl">✂</span>
+                <div className="h-40 overflow-hidden">
+                  <img
+                    src={serviceImages[service.name] || defaultImage}
+                    alt={service.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-5">
                   <h2 className="font-medium text-lg text-ink mb-3">{service.name}</h2>
