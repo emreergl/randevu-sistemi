@@ -31,5 +31,5 @@ try {
         next();
     };
 };
-        module.exports = { protect, authorize};
 
+module.exports = { protect, authorize};

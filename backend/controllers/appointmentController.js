@@ -86,6 +86,22 @@ const createAppointment = async (req, res) => {
         return res.status(409).json({ message: "Seçilen saat aralığı dolu" });
     }
 
+    const customerConflicts = await prisma.appointment.findMany({
+        where: {
+            customerId,
+            status: { not: "CANCELLED" },
+            startTime: { gte: dayStart, lt: dayEnd }
+        }
+    });
+
+    const hasCustomerConflict = customerConflicts.some((apt) =>
+        isOverlapping(start.getTime(), end.getTime(), apt.startTime.getTime(), apt.endTime.getTime())
+    );
+
+    if (hasCustomerConflict) {
+        return res.status(409).json({ message: "Bu saat aralığında zaten başka bir randevunuz var" });
+    }
+
     const appointment = await prisma.appointment.create({
         data: {
             customerId,

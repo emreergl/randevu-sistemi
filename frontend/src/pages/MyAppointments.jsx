@@ -90,7 +90,7 @@ function MyAppointments() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-display text-2xl text-ink">Randevularım</h1>
         <Link
-          to="/" className="bg-brand text-white text-sm px-4 py-2 rounded-lg hover:bg-brand-dark"
+          to="/services" className="bg-brand text-white text-sm px-4 py-2 rounded-lg hover:bg-brand-dark"
         >
           + Yeni Randevu Al
         </Link>
@@ -131,7 +131,7 @@ function MyAppointments() {
               : "Geçmiş randevunuz bulunmamaktadır."}
           </p>
           {tab === "upcoming" && (
-            <Link to="/" className="text-brand hover:underline text-sm">
+            <Link to="/services" className="text-brand hover:underline text-sm">
               Hizmetlere göz atın
             </Link>
           )}
