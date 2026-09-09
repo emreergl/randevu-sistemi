@@ -17,6 +17,16 @@ function Navbar() {
             </Link>
 
             <div className="flex items-center gap-6 text-sm">
+                <Link to="/prices" className="text-ink-soft hover:text-ink">
+                    Fiyatlar
+                </Link>
+
+                {!isAdmin && (
+                    <Link to="/services" className="text-ink-soft hover:text-ink">
+                        Randevu Al
+                    </Link>
+                )}
+
                 {isAuthenticated ? (
                     <>
                         {isAdmin && (

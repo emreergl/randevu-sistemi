@@ -10,7 +10,7 @@ const { protect, authorize } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.post("/", protect, createAppointment);
+router.post("/", protect, authorize("CUSTOMER"), createAppointment);
 router.get("/", protect, getAppointments);
 router.get("/:id", protect, getAppointmentById);
 router.patch("/:id/status", protect, authorize("ADMIN"), updateAppointmentStatus);

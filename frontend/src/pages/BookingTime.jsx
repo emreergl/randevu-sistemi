@@ -10,12 +10,12 @@ function BookingTime() {
 
     const { service, employee, date } = location.state || {};
 
-    const[slots, setSlots] = useState([]);
-    const[loading, setLoading] = useState(true);
-    const[error, setError] = useState(null);
-    const[selectedTime, setSelectedTime] = useState(null);
-    const[submitting, setSubmitting] = useState(false);
-    const[submitError, setSubmitError] = useState(null);
+    const [slots, setSlots] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
 
     useEffect(() => {
         if (!service || !employee || !date) {
@@ -31,8 +31,8 @@ function BookingTime() {
                 const data = await getAvailability(employee.id, date, service.id);
                 const filteredSlots = filterPastSlots(data.slots || [], date);
                 setSlots(filteredSlots);
-                setError(null); 
-            }   catch (err) {
+                setError(null);
+            } catch (err) {
                 setError("Müsait saatler yüklenemedi");
                 console.error(err);
             } finally {
@@ -59,7 +59,7 @@ function BookingTime() {
         if (dateStr !== todayStr) {
             return slots;
         }
-        
+
         const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
         return slots.filter((slot) => {
@@ -119,8 +119,8 @@ function BookingTime() {
                 </div>
             ) : slots.length === 0 ? (
                 <div className="bg-paper border border-line rounded-lg px-4 py-6 text-center text-ink-soft mb-8">
-                    Bu tarihte müsait saat bulunmuyor.Lütfen başka bir tarih seçiniz.
-                </div>  
+                    Bu tarihte müsait saat bulunmuyor. Lütfen başka bir tarih seçiniz.
+                </div>
             ) : (
                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-8">
                     {slots.map((slot) => (
@@ -131,20 +131,19 @@ function BookingTime() {
                                 ${selectedTime?.startTime === slot.startTime
                                     ? "bg-brand border-brand text-white"
                                     : "border-line hover:border-brand text-ink"}`}
-                    >
-                        {slot.startTime}
-                    </button>
+                        >
+                            {slot.startTime}
+                        </button>
                     ))}
                 </div>
             )}
 
             {selectedTime && (
                 <div className="border-t border-line pt-6">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="mb-4">
                         <div className="text-sm text-ink-soft">
                             {formatDate(date)}, {selectedTime.startTime} · {employee.name}
                         </div>
-                        <div className="text-brand font-medium">{service.price} ₺</div>
                     </div>
 
                     {submitError && (

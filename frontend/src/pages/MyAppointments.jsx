@@ -18,12 +18,12 @@ function MyAppointments() {
   const [cancelError, setCancelError] = useState("");
 
   const fetchAppointments = async () => {
-    try{
+    try {
       const data = await getAppointments();
       setAppointments(data);
     } catch (err) {
       console.error(err);
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -76,9 +76,9 @@ function MyAppointments() {
     return (
       <div className="max-w-2xl mx-auto px-6 py-10">
         <div className="space-y-3">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="h-24 bg-line rounded-xl animate-pulse"></div>
-        ))}
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-24 bg-line rounded-xl animate-pulse"></div>
+          ))}
         </div>
       </div>
     );
@@ -90,7 +90,7 @@ function MyAppointments() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-display text-2xl text-ink">Randevularım</h1>
         <Link
-          to="/" className="bg-brand text-white tezt-sm px-4 py-2 rounded-lg hover:bg-brand-dark"
+          to="/" className="bg-brand text-white text-sm px-4 py-2 rounded-lg hover:bg-brand-dark"
         >
           + Yeni Randevu Al
         </Link>
@@ -127,7 +127,7 @@ function MyAppointments() {
         <div className="text-center py-16">
           <p className="text-ink-soft mb-4">
             {tab === "upcoming"
-              ? "Yaklaşan randeunuz bulunmamaktadır."
+              ? "Yaklaşan randevunuz bulunmamaktadır."
               : "Geçmiş randevunuz bulunmamaktadır."}
           </p>
           {tab === "upcoming" && (
@@ -153,7 +153,7 @@ function MyAppointments() {
                       {formatDateTime(apt.startTime)}
                     </div>
                     <div className="text-sm text-ink-soft mt-0.5">
-                      {apt.service.name}  · {apt.employee.name}
+                      {apt.service.name} · {apt.employee.name}
                     </div>
                   </div>
                   <span className={`text-xs px-2.5 py-1 rounded-full ${status.bg} ${status.text}`}>
@@ -161,12 +161,8 @@ function MyAppointments() {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between mt-3">
-                  <span className="text-brand font-medium text-sm">
-                    {apt.service.price} ₺
-                  </span>
-
-                  {canCancel && (
+                {canCancel && (
+                  <div className="flex justify-end mt-3">
                     <button
                       onClick={() => handleCancel(apt.id)}
                       disabled={cancellingId === apt.id}
@@ -174,8 +170,8 @@ function MyAppointments() {
                     >
                       {cancellingId === apt.id ? "İptal ediliyor..." : "İptal Et"}
                     </button>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             );
           })}

@@ -1,6 +1,5 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["queryCompiler", "driverAdapters"]
 }
 
 datasource db {
@@ -61,14 +60,15 @@ model EmployeeService {
 }
 
 model Appointment {
-  id         Int      @id @default(autoincrement())
-  customerId Int
-  serviceId  Int
-  employeeId Int
-  startTime  DateTime
-  endTime    DateTime
-  status     String   @default("PENDING")
-  createdAt  DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  customerId    Int
+  serviceId     Int
+  employeeId    Int
+  startTime     DateTime
+  endTime       DateTime
+  status        String   @default("PENDING")
+  reminderSent  Boolean  @default(false)
+  createdAt     DateTime @default(now())
 
   customer User     @relation(fields: [customerId], references: [id])
   service  Service  @relation(fields: [serviceId], references: [id])

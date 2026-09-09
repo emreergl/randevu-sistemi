@@ -13,6 +13,8 @@ import Profile from "./pages/Profile";
 import AdminServices from "./pages/AdminServices";
 import AdminEmployees from "./pages/AdminEmployees";
 import AdminAppointments from "./pages/AdminAppointments";
+import Services from "./pages/Services";
+import Prices from "./pages/Prices";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
       <Route path="/admin/services" element={<AdminServices />} />
       <Route path="/admin/employees" element={<AdminEmployees />} />
       <Route path="/admin/appointments" element={<AdminAppointments />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/prices" element={<Prices />} />
 
       </Routes>
       </BrowserRouter>

@@ -101,5 +101,6 @@ const sendAppointmentCancelled = async (appointment) => {
 module.exports = {
   sendAppointmentCreated,
   sendAppointmentConfirmed,
-  sendAppointmentCancelled
+  sendAppointmentCancelled,
+  sendMail
 };

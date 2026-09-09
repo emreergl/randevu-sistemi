@@ -9,6 +9,7 @@ const appointmentRoutes = require("./routes/appointmentRoutes");
 const reportRoutes = require("./routes/reportRoutes");
 const cors = require("cors");
 const app = express();
+const  { startReminderJob } = require("./utils/reminderService");
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -28,4 +29,5 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Sunucu ${PORT} portunda çalışıyor`);
+    startReminderJob();
 });
