@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { getServices } from "../services/serviceService";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Prices() {
+  usePageTitle("Fiyatlar");
+
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 

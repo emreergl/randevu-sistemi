@@ -3,8 +3,11 @@ import { getServices, createService, updateService, deleteService } from "../ser
 import BackButton from "../components/BackButton";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import usePageTitle from "../hooks/usePageTitle";
 
 function AdminServices() {
+    usePageTitle("Hizmet Yönetimi");
+
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState(null);

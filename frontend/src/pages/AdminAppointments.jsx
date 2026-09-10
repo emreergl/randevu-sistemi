@@ -5,6 +5,7 @@ import {
 } from "../services/appointmentService";
 import { getEmployees } from "../services/employeeService";
 import BackButton from "../components/BackButton";
+import usePageTitle from "../hooks/usePageTitle";
 
 const statusOptions = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED", "NO_SHOW"];
 
@@ -25,6 +26,8 @@ const statusColors = {
 };
 
 function AdminAppointments() {
+    usePageTitle("Randevu Yönetimi");
+
     const [appointments, setAppointments] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);

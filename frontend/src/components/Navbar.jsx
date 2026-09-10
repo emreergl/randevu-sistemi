@@ -16,7 +16,7 @@ function Navbar() {
         <nav className="bg-surface border-b border-line px-6 py-4">
             <div className="flex items-center justify-between">
                 <Link to="/" className="font-display text-xl text-brand">
-                    Bayan Kuaför Çetin
+                    Kadın Kuaför Çetin
                 </Link>
 
                 <button

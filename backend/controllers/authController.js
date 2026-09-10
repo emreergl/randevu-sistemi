@@ -144,6 +144,27 @@ const updateMe = async (req, res) => {
         }
 };
 
+const getAllCustomers = async (req, res) => {
+    try {
+        const customers = await prisma.user.findMany({
+            where: { role: "CUSTOMER" },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                phone: true,
+                createdAt: true
+            },
+            orderBy: { createdAt: "desc" }
+        });
+
+        res.json(customers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Sunucu hatası" });
+    }
+};
+
 const changePassword = async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
@@ -179,4 +200,4 @@ const changePassword = async (req, res) => {
         res.status(500).json({ message: "Sunucu hatası" });
     }
 };
-module.exports = { register, login, getMe, updateMe, changePassword };
+module.exports = { register, login, getMe, updateMe, changePassword, getAllCustomers };

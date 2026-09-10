@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAppointments, cancelAppointment } from "../services/appointmentService";
+import usePageTitle from "../hooks/usePageTitle";
 
 const statusConfig = {
   PENDING: { label: "Beklemede", bg: "bg-warn-soft", text: "text-warn" },
@@ -11,6 +12,8 @@ const statusConfig = {
 };
 
 function MyAppointments() {
+  usePageTitle("Randevularım");
+
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("upcoming");
@@ -125,6 +128,7 @@ function MyAppointments() {
 
       {visible.length === 0 ? (
         <div className="text-center py-16">
+          <div className="text-4xl mb-3">📅</div>
           <p className="text-ink-soft mb-4">
             {tab === "upcoming"
               ? "Yaklaşan randevunuz bulunmamaktadır."

@@ -12,10 +12,13 @@ import {
     Legend
 } from "chart.js";
 import { getOccupancy, getPopularServices } from "../services/reportService";
+import usePageTitle from "../hooks/usePageTitle";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
 
 function AdminDashboard() {
+    usePageTitle("Yönetim Paneli");
+
     const [summary, setSummary] = useState(null);
     const [loading, setLoading] = useState(true);
     const [occupancy, setOccupancy] = useState(null);
@@ -94,6 +97,9 @@ function AdminDashboard() {
                     </Link>
                     <Link to="/admin/appointments" className="text-sm text-brand hover:underline">
                         Randevular
+                    </Link>
+                    <Link to="/admin/customers" className="text-sm text-brand hover:underline">
+                        Müşteriler
                     </Link>
                 </div>
             </div>

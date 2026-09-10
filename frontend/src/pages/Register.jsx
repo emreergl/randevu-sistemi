@@ -3,8 +3,11 @@ import { useAuth } from "../context/AuthContext";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useState, useEffect } from "react";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Register() {
+    usePageTitle("Kayıt Ol");
+
     const navigate = useNavigate();
     const { register, isAuthenticated, isAdmin } = useAuth();
 
@@ -48,7 +51,7 @@ function Register() {
             <div className="w-full max-w-sm">
 
                 <div className="text-center mb-8">
-                    <h1 className="font-display text-4xl text-brand mb-1">BAYAN KUAFÖR ÇETİN</h1>
+                    <h1 className="font-display text-4xl text-brand mb-1">KadınKUAFÖR ÇETİN</h1>
                     <p className="text-ink-soft text-sm">Giriş Yapmak İçin Kayıt Olunuz</p>
                 </div>
 

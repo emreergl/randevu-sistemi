@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getEmployees } from "../services/employeeService";
 import BackButton from "../components/BackButton";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Booking() {
+    usePageTitle("Randevu Al");
+
     const location = useLocation();
     const navigate = useNavigate();
 

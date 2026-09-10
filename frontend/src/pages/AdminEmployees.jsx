@@ -11,8 +11,11 @@ import { getServices } from "../services/serviceService";
 import BackButton from "../components/BackButton";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import usePageTitle from "../hooks/usePageTitle";
 
 function AdminEmployees() {
+  usePageTitle("Çalışan Yönetimi");
+
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);

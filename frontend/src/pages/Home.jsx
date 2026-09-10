@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getServices } from "../services/serviceService";
+import usePageTitle from "../hooks/usePageTitle";
 
 const serviceImages = {
   "Saç Kesimi": "https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGFpcmN1dCUyMHdvbWVufGVufDB8fDB8fHww",
@@ -17,6 +18,8 @@ const serviceImages = {
 const defaultImage = "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80&fit=crop";
 
 function Home() {
+  usePageTitle("Ana Sayfa");
+
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 

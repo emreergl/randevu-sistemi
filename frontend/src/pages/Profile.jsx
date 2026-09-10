@@ -4,8 +4,11 @@ import { updateProfile, changePassword } from "../services/authService";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import BackButton from "../components/BackButton";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Profile() {
+    usePageTitle("Profilim");
+
     const { user, updateUser } = useAuth();
 
     const [profileForm, setProfileForm] = useState({

@@ -27,3 +27,8 @@ export const changePassword = async (currentPassword, newPassword) => {
     });
     return response.data;
 };
+
+export const getAllCustomers = async () => {
+    const response = await appi.get("/auth/Customers");
+    return response.data;
+};

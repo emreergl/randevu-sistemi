@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getServices } from "../services/serviceService";
 import { useAuth } from "../context/AuthContext";
+import usePageTitle from "../hooks/usePageTitle";
 
 const serviceImages = {
   "Saç Kesimi": "https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?w=500&auto=format&fit=crop&q=60",
@@ -14,6 +15,8 @@ const serviceImages = {
 const defaultImage = "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80&fit=crop";
 
 function Services() {
+  usePageTitle("Hizmetlerimiz");
+
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,8 +84,8 @@ function Services() {
               <button
                 key={service.id}
                 onClick={() => handleSelect(service)}
-                className="text-left bg-surface border border-line rounded-xl overflow-hidden
-                  hover:border-brand hover:shadow-md transition-all"
+               className="text-left bg-surface border border-line rounded-xl overflow-hidden
+                    hover:border-brand hover:shadow-md hover:-translate-y-1 transition-all"
               >
                 <div className="h-40 overflow-hidden">
                   <img
