@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
 @theme {
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+
     --color-ink: #1c1a17;
     --color-ink-soft: #6b665e;
     --color-ink-faint: #a29c92;
