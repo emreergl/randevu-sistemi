@@ -82,9 +82,18 @@ function Navbar() {
                     </Link>
 
                     {!isAdmin && (
-                        <Link to="/services" onClick={() => setMenuOpen(false)} className="text-ink-soft">
+                        <button
+                            onClick={() => {
+                                if (isAuthenticated) {
+                                    navigate("/services");
+                                } else {
+                                    navigate("/login");
+                                }
+                            }}
+                            className="text-ink-soft hover::text-ink"
+                        >
                             Randevu Al
-                        </Link>
+                        </button>
                     )}
 
                     {isAuthenticated ? (

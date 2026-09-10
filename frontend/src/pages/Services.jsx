@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getServices } from "../services/serviceService";
+import { useAuth } from "../context/AuthContext";
 
 const serviceImages = {
   "Saç Kesimi": "https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?w=500&auto=format&fit=crop&q=60",
@@ -18,7 +19,13 @@ function Services() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { isAuthenticated } = useAuth();
+  
   useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
     const fetchServices = async () => {
       try {
         const data = await getServices();
@@ -32,7 +39,7 @@ function Services() {
     };
 
     fetchServices();
-  }, []);
+  }, [isAuthenticated]);
 
   const handleSelect = (service) => {
     navigate("/booking", { state: { service } });
