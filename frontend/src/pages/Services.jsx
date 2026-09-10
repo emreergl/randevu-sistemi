@@ -9,7 +9,12 @@ const serviceImages = {
   "Fön": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&q=80&fit=crop",
   "Saç Boyama": "https://images.unsplash.com/photo-1605980766335-d3a41c7332a1?w=400&q=80&fit=crop",
   "Röfle": "https://images.unsplash.com/photo-1707979577466-2d6109c68a45?w=400&q=80&fit=crop",
-  "Keratin Bakımı": "https://images.unsplash.com/photo-1605980625600-88b46abafa8d?w=400&q=80&fit=crop"
+  "Keratin Bakımı": "https://images.unsplash.com/photo-1605980625600-88b46abafa8d?w=400&q=80&fit=crop",
+  "Manikür": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=400&q=80&fit=crop",
+  "Pedikür": "https://images.unsplash.com/photo-1707725238063-0c54fb6963d1?w=400&q=80&fit=crop",
+  "Kaş Alımı": "https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?w=400&q=80&fit=crop",
+  "Cilt Bakımı": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&q=80&fit=crop",
+  "Saç Düzleştirme": "https://media.istockphoto.com/id/452697595/photo/hair-straighteners.webp?a=1&b=1&s=612x612&w=0&k=20&c=VyWosVmgw_GBPeGQn1NC6kBYQuf23pjvj9iAIqHu-LA="
 };
 
 const defaultImage = "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80&fit=crop";
@@ -22,9 +27,10 @@ function Services() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   
   useEffect(() => {
+    if (authLoading) return;
     if (!isAuthenticated) {
       navigate("/login");
       return;
@@ -42,7 +48,7 @@ function Services() {
     };
 
     fetchServices();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, authLoading, navigate]);
 
   const handleSelect = (service) => {
     navigate("/booking", { state: { service } });
