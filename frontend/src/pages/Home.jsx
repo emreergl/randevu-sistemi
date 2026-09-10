@@ -7,7 +7,11 @@ const serviceImages = {
   "Fön": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&q=80&fit=crop",
   "Saç Boyama": "https://thumbs.dreamstime.com/b/hairdresser-applying-color-female-customer-salon-doing-hair-dye-professional-to-design-women-having-her-dyed-36422960.jpg",
   "Röfle": "https://images.unsplash.com/photo-1707979577466-2d6109c68a45?w=400&q=80&fit=crop",
-  "Keratin Bakımı": "https://images.unsplash.com/photo-1605980625600-88b46abafa8d?w=400&q=80&fit=crop"
+  "Keratin Bakımı": "https://images.unsplash.com/photo-1605980625600-88b46abafa8d?w=400&q=80&fit=crop",
+  "Manikür": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=400&q=80&fit=crop",
+  "Pedikür": "https://images.unsplash.com/photo-1707725238063-0c54fb6963d1?w=400&q=80&fit=crop",
+  "Kaş Alımı": "https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?w=400&q=80&fit=crop",
+  "Cilt Bakımı": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&q=80&fit=crop"
 };
 
 const defaultImage = "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80&fit=crop";
