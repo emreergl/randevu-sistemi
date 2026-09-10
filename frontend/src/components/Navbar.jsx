@@ -39,19 +39,10 @@ function Navbar() {
 
                     {isAuthenticated ? (
                         <>
-                            {!isAdmin && (
-                                <button
-                                    onClick={() => {
-                                        if (isAuthenticated) {
-                                            navigate("/services");
-                                        } else {
-                                            navigate("/login");
-                                        }    setMenuOpen(false);
-                                    }}
-                                    className="text-ink-soft text-left"
-                                >
-                                    Randevu Al
-                                </button>
+                            {isAdmin && (
+                                <Link to="/admin" className="text-ink-soft hover:text-ink">
+                                    Yönetim Paneli
+                                </Link>
                             )}
 
                             {!isAdmin && (
@@ -91,18 +82,9 @@ function Navbar() {
                     </Link>
 
                     {!isAdmin && (
-                        <button
-                            onClick={() => {
-                                if (isAuthenticated) {
-                                    navigate("/services");
-                                } else {
-                                    navigate("/login");
-                                }
-                            }}
-                            className="text-ink-soft hover::text-ink"
-                        >
+                        <Link to="/services" onClick={() => setMenuOpen(false)} className="text-ink-soft">
                             Randevu Al
-                        </button>
+                        </Link>
                     )}
 
                     {isAuthenticated ? (
