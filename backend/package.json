@@ -13,6 +13,7 @@
   "type": "commonjs",
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.9.1",
+    "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "bcrypt": "^6.0.0",
     "better-sqlite3": "^13.0.3",
@@ -22,6 +23,7 @@
     "jsonwebtoken": "^9.0.3",
     "node-cron": "^4.6.0",
     "nodemailer": "^9.0.5",
+    "pg": "^8.23.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
