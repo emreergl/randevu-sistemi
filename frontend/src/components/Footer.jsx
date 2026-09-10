@@ -8,7 +8,7 @@ function Footer() {
                     <p className="text-sm">Kendinize zaman ayırın</p>
                 </div>
                 <div className="text-sm">
-                    <p>Pazartesi - Cumartesi: 09:00 - 19:00</p>
+                    <p>Pazartesi - Cumartesi: 09:00 - 18:00</p>
                 </div>
             </div>
             <div className="border-t border-white/10 mt-6 pt-6 text-sm text-center sm:text-left">
