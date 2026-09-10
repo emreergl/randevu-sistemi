@@ -12,7 +12,7 @@ const app = express();
 const  { startReminderJob } = require("./utils/reminderService");
 
 app.use(cors({
-    origin: true,
+    origin: "https://randevu-sistemi-pi.vercel.app",
     credentials: true
 }));
 app.use(express.json());
