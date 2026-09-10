@@ -12,7 +12,7 @@ const app = express();
 const  { startReminderJob } = require("./utils/reminderService");
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: true,
     credentials: true
 }));
 app.use(express.json());
