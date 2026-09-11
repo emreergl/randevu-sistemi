@@ -165,6 +165,13 @@ function AdminServices() {
                     <div key={i} className="h-16 bg-line rounded-xl animate-pulse"></div>
                 ))}
             </div>
+
+    ) : services.length === 0 ? (
+        <div className="text-center py-16">
+            <div className="text-4xl mb-3">✂️</div>
+            <p className="text-ink-soft">Henüz hizmet eklenmemiş</p>
+        </div>
+    
     ) : (
         <div className="space-y-3">
             {services.map((service) => (
@@ -182,13 +189,13 @@ function AdminServices() {
                     <div className="flex gap-3">
                         <button
                             onClick={() => openEditForm(service)}
-                            className="text-sm text-brand hover:underline"
+                            className="text-sm text-brand hover:underline transition-colors"
                         >
                             Düzenle
                         </button> 
                         <button
                             onClick={() => handleDelete(service.id)}
-                            className="text-sm text-danger hover:underline"
+                            className="text-sm text-danger hover:underline transition-colors"
                     >
                         Sil
                     </button>

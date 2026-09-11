@@ -295,6 +295,12 @@ function AdminEmployees() {
             <div key={i} className="h-20 bg-line rounded-xl animate-pulse"></div>
           ))}
         </div>
+      ) : employees.length === 0 ? (
+        <div className="text-center py-16">
+          <div className="text-4xl mb-3">👤</div>
+          <p className="text-ink-soft">Henüz çalışan eklenmemiş.</p>
+        </div>
+      
       ) : (
         <div className="space-y-3">
           {employees.map((emp) => (
@@ -307,19 +313,19 @@ function AdminEmployees() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => openHoursPanel(emp)}
-                    className="text-sm text-brand hover:underline"
+                    className="text-sm text-brand hover:underline transition-colors"
                   >
                     Mesai
                   </button>
                   <button
                     onClick={() => openEditForm(emp)}
-                    className="text-sm text-brand hover:underline"
+                    className="text-sm text-brand hover:underline transition-colors"
                   >
                     Düzenle
                   </button>
                   <button
                     onClick={() => handleDelete(emp.id)}
-                    className="text-sm text-danger hover:underline"
+                    className="text-sm text-danger hover:underline transition-colors"
                   >
                     Sil
                   </button>

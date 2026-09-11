@@ -154,7 +154,7 @@ function AdminAppointments() {
 
                 <button
                     onClick={clearFilters}
-                    className="text-sm text-ink-soft hover:text-ink"
+                    className="text-sm text-ink-soft hover:text-ink transition-colors"
                 >
                     Filtreleri Temizle
                 </button>
@@ -168,7 +168,8 @@ function AdminAppointments() {
                 </div>
             ) : appointments.length === 0 ? (
                 <div className="text-center py-16 text-ink-soft">
-                    Filtrelere uygun randevu bulunamadı.
+                    <div className="text-4xl mb-3">📋</div>
+                    <p>Filtrelere uygun randevu bulunamadı.</p>
                 </div>
             ) : (
                 <div className="bg-surface border border-line rounded-xl overflow-x-auto">

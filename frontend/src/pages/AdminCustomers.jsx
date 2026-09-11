@@ -58,7 +58,8 @@ function AdminCustomers() {
                 </div>
             ) : customers.length === 0 ? (
                 <div className="text-center py-16 text-ink-soft">
-                    Henüz kayıtlı müşteri bulunmuyor.
+                    <div className="text-4xl mb-3">👥</div>
+                    <p>Henüz kayıtlı müşteri bulunmuyor.</p>
                 </div>
             ) : (
                 <div className="bg-surface border border-line rounded-lg overflow-x-auto">
