@@ -1,48 +1,69 @@
-# Randevu Yönetim Sistemi
+# Kadın Kuaför Çetin — Randevu Yönetim Sistemi
 
-Kuaför salonları için geliştirilen full stack web uygulaması. Müşteriler online randevu alabilir, işletme sahibi hizmetleri, çalışanları ve tüm randevu akışını tek panelden yönetebilir.
+Kadın kuaför salonları için geliştirilen full stack web uygulaması. Müşteriler online randevu alabilir, işletme sahibi hizmetleri, çalışanları ve tüm randevu akışını tek panelden yönetebilir.
+
+## Canlı Demo
+
+- **Site:** https://randevu-sistemi-pi.vercel.app
+- **API:** https://randevu-sistemi-backend.onrender.com
+
+> Not: Backend ücretsiz planda barındırıldığı için, uzun süre kullanılmadığında "uyku moduna" geçer. İlk istek 30-50 saniye sürebilir, sonraki istekler normal hızda çalışır.
 
 ## Kullanıcı Rolleri
 
-- **Müşteri:** Hizmetleri görüntüler, müsait saatlere randevu alır, randevusunu iptal eder
-- **Admin (İşletme Sahibi):** Hizmet ve çalışan yönetimi yapar, tüm randevuları takip eder, doluluk ve gelir raporlarını görür
+- **Müşteri:** Hizmetleri görüntüler, müsait saatlere randevu alır, randevusunu iptal eder, profil bilgilerini günceller
+- **Admin (İşletme Sahibi):** Hizmet, çalışan ve müşteri yönetimi yapar, tüm randevuları takip eder, doluluk ve gelir raporlarını görür
 
 > Not: Çalışanlar sistemde veri olarak tutulur (hizmet ve çalışma saati bilgileriyle), giriş yapan bir kullanıcı rolü değildir. Randevu ataması admin tarafından yönetilir.
-
-## User Stories
-
-### Müşteri
-- Hizmetleri ve fiyatları görmek istiyorum ki hangi hizmeti alacağıma karar verebileyim
-- Seçtiğim çalışanın müsait saatlerini görmek istiyorum ki uygun bir zaman seçebileyim
-- Randevumu iptal edebilmek istiyorum ki planım değişirse mağdur olmayayım
-- Geçmiş ve yaklaşan randevularımı görmek istiyorum ki takibini yapabileyim
-- Randevum onaylandığında e-posta almak istiyorum ki bilgim olsun
-
-### Admin
-- Hizmet ekleyip düzenlemek istiyorum ki müşteriler güncel seçenekleri görsün
-- Çalışan ekleyip çalışma saatlerini tanımlamak istiyorum ki müsaitlik doğru hesaplansın
-- Tüm randevuları tarih ve çalışana göre filtreleyerek görmek istiyorum
-- Randevu durumunu güncellemek istiyorum (onayla / iptal et / tamamlandı)
-- Haftalık doluluk ve gelir istatistiklerini görmek istiyorum ki işletmeyi değerlendirebileyim
 
 ## Öne Çıkan Teknik Özellikler
 
 - Çalışma saatleri ve mevcut randevulara göre dinamik müsaitlik hesaplama
-- Çakışan randevu oluşturulmasını engelleyen doğrulama mantığı
+- Çakışan randevu oluşturulmasını engelleyen doğrulama mantığı (hem çalışan hem müşteri bazında)
 - JWT tabanlı rol bazlı yetkilendirme
 - Rol bazlı veri filtreleme (müşteri yalnızca kendi kayıtlarına erişir)
-- Otomatik e-posta bildirimleri
-- Yönetim paneli için gelir, doluluk ve popülerlik raporları
+- Otomatik e-posta bildirimleri (randevu oluşturma, onaylama, iptal)
+- Zamanlanmış görev (cron job) ile randevu hatırlatma e-postaları
+- Yönetim paneli için gelir, doluluk ve popülerlik raporları (grafiklerle)
+- Responsive tasarım (mobil ve masaüstü)
+- Bulut veritabanı (Neon/PostgreSQL) ve production deploy (Render + Vercel)
 
 ## Teknolojiler
 
 | Katman | Teknoloji |
 |---|---|
-| Frontend | React, Tailwind CSS |
+| Frontend | React, React Router, Tailwind CSS, Chart.js |
 | Backend | Node.js, Express |
-| Veritabanı | SQLite (Prisma ORM) |
+| Veritabanı | PostgreSQL (Neon), Prisma ORM |
 | Kimlik Doğrulama | JWT, bcrypt |
-| Diğer | Nodemailer, Chart.js |
+| Diğer | Nodemailer, node-cron |
+| Barındırma | Render (backend), Vercel (frontend), Neon (veritabanı) |
+
+## Ekran Görüntüleri
+
+## Ana Sayfa
+![Ana Sayfa](screenshots/ana-sayfa-1.png)
+
+### Randevu Alma - Tarih ve Çalışan Seçimi
+![Randevu Tarih Seçimi](screenshots/randevu-alma-akisi-1.png)
+
+### Randevu Alma - Saat Seçimi
+![Randevu Saat Seçimi](screenshots/randevu-alma-akisi-2.png)
+
+### Randevularım
+![Randevularım](screenshots/musteri-randevularim.png)
+
+### Yönetim Paneli - Dashboard
+![Admin Dashboard](screenshots/admin-paneli.png)
+
+### Yönetim Paneli
+![Admin Randevu Yönetimi](screenshots/admin-randevular.png)
+
+### Giriş Sayfası
+![Giriş Sayfası](screenshots/login.png)
+
+### Kayıt Sayfası
+![Kayıt Olma Sayfası](screenshots/register.png)
 
 ## API Endpoint'leri
 
@@ -57,6 +78,7 @@ Tüm istekler `/api` öneki ile başlar. Korumalı endpoint'ler için `Authoriza
 | GET | `/auth/me` | Giriş yapmış kullanıcı bilgisi | Giriş gerekli |
 | PUT | `/auth/me` | Ad ve telefon günceller | Giriş gerekli |
 | PUT | `/auth/me/password` | Şifre değiştirir | Giriş gerekli |
+| GET | `/auth/customers` | Tüm müşterileri listeler | Admin |
 
 ### Hizmetler
 
@@ -74,9 +96,9 @@ Tüm istekler `/api` öneki ile başlar. Korumalı endpoint'ler için `Authoriza
 |---|---|---|---|
 | GET | `/employees` | Çalışanları listeler | Herkese açık |
 | GET | `/employees/:id` | Çalışan detayı | Herkese açık |
-| POST | `/employees` | Çalışan ekler | Admin |
-| PUT | `/employees/:id` | Çalışan günceller | Admin |
-| DELETE | `/employees/:id` | Çalışan siler | Admin |
+| POST | `/employees` | Çalışan ekler (hizmet ataması dahil) | Admin |
+| PUT | `/employees/:id` | Çalışan günceller (hizmet ataması dahil) | Admin |
+| DELETE | `/employees/:id` | Çalışan siler (randevu kaydı yoksa) | Admin |
 | GET | `/employees/:id/working-hours` | Çalışma saatlerini getirir | Herkese açık |
 | PUT | `/employees/:id/working-hours` | Çalışma saatlerini tanımlar | Admin |
 | GET | `/employees/:id/availability` | Müsait saatleri hesaplar | Herkese açık |
@@ -90,7 +112,7 @@ Müsaitlik sorgusu `?date=YYYY-MM-DD&serviceId=1` parametrelerini alır.
 | POST | `/appointments` | Randevu oluşturur | Giriş gerekli |
 | GET | `/appointments` | Randevuları listeler | Role göre filtreli |
 | GET | `/appointments/:id` | Randevu detayı | Sahibi veya admin |
-| PATCH | `/appointments/:id/status` | Durum günceller | Admin |
+| PATCH | `/appointments/:id/status` | Durum günceller (beklemede/onaylandı/tamamlandı/iptal/gelmedi) | Admin |
 | DELETE | `/appointments/:id` | Randevu iptal eder | Sahibi veya admin |
 
 Listeleme sorgusu `?status=&employeeId=&date=` parametreleriyle filtrelenebilir.
@@ -104,25 +126,19 @@ Listeleme sorgusu `?status=&employeeId=&date=` parametreleriyle filtrelenebilir.
 | GET | `/reports/popular-services` | En çok tercih edilen hizmetler | Admin |
 | GET | `/reports/occupancy` | Çalışan bazında doluluk oranı | Admin |
 
-## Kurulum
+## Yerel Kurulum
 
 ### Gereksinimler
 
 - Node.js 18 veya üzeri
 - Git
+- PostgreSQL veritabanı (Neon gibi bir bulut sağlayıcı önerilir)
 
-### Adımlar
-
-Depoyu klonlayın:
+### Backend
 
 ```
 git clone https://github.com/emreergl/randevu-sistemi.git
 cd randevu-sistemi/backend
-```
-
-Bağımlılıkları yükleyin:
-
-```
 npm install
 ```
 
@@ -130,7 +146,7 @@ npm install
 
 ```
 PORT=5000
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://kullanici:sifre@host/veritabani?sslmode=require"
 JWT_SECRET=gizli-anahtar
 JWT_EXPIRES_IN=7d
 SMTP_HOST=sandbox.smtp.mailtrap.io
@@ -154,7 +170,28 @@ Sunucuyu başlatın:
 npm run dev
 ```
 
-Uygulama `http://localhost:5000` adresinde çalışır.
+Backend `http://localhost:5000` adresinde çalışır.
+
+### Frontend
+
+```
+cd ../frontend
+npm install
+```
+
+`frontend` klasöründe `.env` dosyası oluşturun:
+
+```
+VITE_API_URL=http://localhost:5000/api
+```
+
+Sunucuyu başlatın:
+
+```
+npm run dev
+```
+
+Frontend `http://localhost:5173` adresinde çalışır.
 
 > E-posta bildirimlerini denemek için `MAIL_ENABLED=true` yapın ve SMTP bilgilerini doldurun. Devre dışı bırakıldığında bildirimler gönderilmez, yalnızca konsola yazdırılır.
 
@@ -162,16 +199,21 @@ Uygulama `http://localhost:5000` adresinde çalışır.
 
 Sistem tek işletme için tasarlanmıştır. Çok işletmeli (multi-tenant) yapıya geçiş için `Business` tablosu eklenmesi ve `Service`, `Employee`, `Appointment` tablolarına `businessId` alanı ile filtreleme uygulanması yeterlidir.
 
-Geliştirme ortamında SQLite kullanılmıştır. Prisma ORM sayesinde PostgreSQL'e geçiş, yalnızca datasource tanımının güncellenmesiyle mümkündür.
+## Proje Yapısı
 
-## Yapılacaklar
-
-- Frontend geliştirme (React, Tailwind CSS)
-  - Giriş ve kayıt ekranları
-  - Hizmet listeleme ve randevu alma akışı
-  - Müşteri randevu yönetimi
-  - Yönetim paneli: hizmet, çalışan ve randevu yönetimi
-  - Grafik ve raporlama ekranı (Chart.js)
-- Randevu hatırlatma bildirimleri (zamanlanmış görev)
-- Responsive tasarım
-- Yayına alma (deploy)
+```
+randevu-sistemi/
+├── backend/
+│   ├── controllers/
+│   ├── routes/
+│   ├── middleware/
+│   ├── utils/          (e-posta servisi, hatırlatma zamanlayıcısı)
+│   └── prisma/
+└── frontend/
+    └── src/
+        ├── pages/
+        ├── components/
+        ├── services/    (API çağrıları)
+        ├── context/     (kimlik doğrulama durumu)
+        └── hooks/
+```
