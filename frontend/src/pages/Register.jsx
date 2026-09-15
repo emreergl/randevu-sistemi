@@ -51,7 +51,7 @@ function Register() {
             <div className="w-full max-w-sm">
 
                 <div className="text-center mb-8">
-                    <h1 className="font-display text-4xl text-brand mb-1">KADIN KUAFÖR ÇETİN</h1>
+                    <h1 className="font-display text-3xl text-brand mb-1">KADIN KUAFÖR ÇETİN</h1>
                     <p className="text-ink-soft text-sm">Giriş Yapmak İçin Kayıt Olunuz</p>
                 </div>
 
@@ -96,7 +96,7 @@ function Register() {
                     />
 
                     {error && (
-                        <div className="bg-danger-soft text-danger text-sm rounded-lg pxpx-3.5 py-2.5">
+                        <div className="bg-danger-soft text-danger text-sm rounded-lg px-3.5 py-2.5">
                             {error}
                         </div>
                     )}
