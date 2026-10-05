@@ -299,7 +299,7 @@ const getAvailability = async (req, res) => {
         const appointments = await prisma.appointment.findMany({
             where: {
                 employeeId,
-                status: { not: "CANCELED" },
+                status: { not: "CANCELLED" },
                 startTime: { gte: dayStart, lt: dayEnd }
             }
         });
